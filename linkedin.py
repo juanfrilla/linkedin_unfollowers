@@ -2,20 +2,21 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-import os
+import os, chromedriver_autoinstaller
 from dotenv import load_dotenv
 from halo import Halo
 import warnings
 
-warnings.filterwarnings('ignore')  #arrreglar los warnings
+warnings.filterwarnings('ignore')
 
 class Scraper(object):
     def __init__(self):
         options = Options()
         options.add_argument("--headless")
         options.add_argument("window-size=1120x550")
+        path = chromedriver_autoinstaller.install()
         self.driver = webdriver.Chrome(
-            executable_path=r"/usr/bin/chromedriver", options=options)
+            executable_path=path, options=options)
         self.spinner = Halo(text='Obteniendo contactos que no te siguen...', spinner='shark')
         load_dotenv()
         
